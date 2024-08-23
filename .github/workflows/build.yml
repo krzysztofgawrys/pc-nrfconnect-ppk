@@ -34,10 +34,19 @@ jobs:
       - name: Pack
         run: npm pack
 
+      - name: Forge
+        run: npm install --save-dev @electron-forge/cli
+
+      - name: Npx
+        run: npx electron-forge import
+
+      - name: Make
+        run: npm run make
+        
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
           path: |
-            **/pc-nrfconnect-ppk-4.2.0.tgz
+            out
             pc-nrfconnect-ppk-4.2.0.tgz
