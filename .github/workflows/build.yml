@@ -33,3 +33,11 @@ jobs:
 
       - name: Pack
         run: npm pack
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            **/pc-nrfconnect-ppk-4.2.0.tgz
+            pc-nrfconnect-ppk-4.2.0.tgz
