@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-4-Clause
  */
 
-@import '~@nordicsemiconductor/pc-nrfconnect-shared/styles';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .btn-lg,
 .btn-sm {
@@ -29,5 +31,18 @@
 }
 
 .scroll-bar-white-bg {
-    @include scrollbars($white);
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+    }
 }

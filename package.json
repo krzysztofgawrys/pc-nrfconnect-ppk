@@ -1,70 +1,87 @@
 {
     "name": "pc-nrfconnect-ppk",
     "version": "4.4.0",
-    "displayName": "Power Profiler",
-    "description": "App for use with Nordic Power Profiler Kits",
-    "homepage": "https://github.com/NordicSemiconductor/pc-nrfconnect-ppk",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/NordicSemiconductor/pc-nrfconnect-ppk.git"
-    },
+    "description": "Power Profiler Kit 2 standalone desktop app",
+    "main": "out/main/index.js",
     "author": "Nordic Semiconductor ASA",
     "license": "SEE LICENSE IN LICENSE",
-    "main": "dist/bundle.js",
-    "nrfConnectForDesktop": {
-        "html": "dist/index.html",
-        "nrfutil": {
-            "device": [
-                "2.10.2"
-            ]
-        },
-        "nrfutilCore": "8.1.1"
-    },
-    "engines": {
-        "nrfconnect": ">=5.2.0"
-    },
-    "files": [
-        "dist/",
-        "resources/icon.*",
-        "firmware/*",
-        "worker/*",
-        "icon.png",
-        "LICENSE",
-        "Changelog.md"
-    ],
     "scripts": {
-        "prepare": "husky install",
-        "watch": "run-p --silent --continue-on-error watch:*",
-        "watch:build": "run-esbuild --watch",
-        "watch:types": "tsc --noEmit --pretty --watch --preserveWatchOutput",
-        "build:dev": "run-esbuild",
-        "build:prod": "run-esbuild --prod",
-        "test": "jest",
-        "check:app": "check-app-properties",
-        "check": "run-p --silent --continue-on-error --print-label check:*",
-        "check:lint": "eslint --color .",
-        "check:types": "check-for-typescript tsc --noEmit --pretty",
-        "check:license": "nrfconnect-license check",
-        "nordic-publish": "node ./dist/nordic-publish.js"
+        "dev": "electron-vite dev",
+        "build": "electron-vite build",
+        "preview": "electron-vite preview",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@electron/remote": "^2.1.2",
+        "archiver": "^6.0.1",
+        "electron-log": "^5.2.0",
+        "electron-store": "^8.2.0",
+        "serialport": "^12.0.0"
     },
     "devDependencies": {
         "@nordicsemiconductor/pc-nrfconnect-shared": "^244.0.0",
         "@types/archiver": "^6.0.2",
         "@types/fs-extra": "^11.0.4",
+        "@types/node": "^20.0.0",
+        "@types/react": "^18.0.0",
+        "@types/react-dom": "^18.0.0",
         "@types/redux-mock-store": "^1.0.3",
         "@types/unzipper": "^0.10.9",
+        "@vitejs/plugin-react": "^4.3.4",
+        "autoprefixer": "^10.4.20",
         "bson": "4.6.5",
         "chart.js": "^4.4.2",
+        "clsx": "^2.1.1",
+        "electron": "^31.0.0",
+        "electron-builder": "^24.13.3",
+        "electron-vite": "^2.3.0",
         "mathjs": "^10.6.3",
+        "postcss": "^8.4.49",
+        "react": "^18.3.1",
         "react-chartjs-2": "^5.2.0",
+        "react-dom": "^18.3.1",
+        "react-redux": "^9.1.2",
+        "redux": "^5.0.1",
+        "@reduxjs/toolkit": "^2.3.0",
         "redux-mock-store": "^1.5.4",
-        "unzipper": "^0.10.14"
+        "tailwindcss": "^3.4.15",
+        "typescript": "^5.7.2",
+        "unzipper": "^0.10.14",
+        "vite": "^5.4.11"
     },
-    "prettier": "@nordicsemiconductor/pc-nrfconnect-shared/config/prettier.config.js",
-    "dependencies": {
-        "archiver": "^6.0.1"
+    "build": {
+        "appId": "com.nordicsemiconductor.ppk",
+        "productName": "Power Profiler",
+        "directories": {
+            "output": "release"
+        },
+        "files": [
+            "out/**",
+            "worker/**",
+            "firmware/**",
+            "resources/icon.*",
+            "icon.png"
+        ],
+        "asarUnpack": [
+            "**/node_modules/serialport/**",
+            "**/node_modules/@serialport/**",
+            "worker/**"
+        ],
+        "linux": {
+            "target": "AppImage"
+        },
+        "win": {
+            "target": "nsis"
+        },
+        "mac": {
+            "target": "dmg"
+        }
     },
-    "bundleDependencies": [
-        "archiver"
-    ]
+    "prettier": {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "tabWidth": 4
+    }
 }

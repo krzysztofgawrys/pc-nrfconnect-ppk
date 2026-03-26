@@ -1,0 +1,38 @@
+name: Build Electron Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      # KROK 1: Kompilacja Vite (Main, Preload i Renderer)
+      - name: Build Source Code
+        run: npm run build
+
+      # KROK 2: Pakowanie do pliku wykonywalnego (.exe)
+      - name: Package Application
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run dist -- --win
+        
+      # KROK 3: Zapisanie pliku .exe jako artefakt (opcjonalnie)
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: dist/*.exe # Upewnij się, że electron-builder wypuszcza pliki do folderu dist

@@ -4,35 +4,23 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-4-Clause
  */
 
-const { resolve } = require('path');
-
-const { execPath, platform } = process;
-
-const asarPath = (() => {
-    switch (true) {
-        case /node_modules/.test(execPath):
-            return resolve(execPath.split('node_modules')[0]);
-        case platform === 'win32':
-            return resolve(execPath, '..', 'resources', 'app.asar');
-        case platform === 'darwin':
-            return resolve(
-                execPath.split('/Frameworks/')[0],
-                'Resources',
-                'app.asar',
-            );
-        case platform === 'linux':
-            return resolve(
-                execPath.split('/').slice(0, -1).join('/'),
-                'resources',
-                'app.asar',
-            );
-        default:
-            return null;
+// Resolve serialport from the local node_modules (standalone app).
+// In production the native .node addon must be in app.asar.unpacked,
+// which electron-builder handles via the asarUnpack option.
+const { SerialPort } = (() => {
+    try {
+        return require('serialport');
+    } catch (_e) {
+        const path = require('path');
+        const unpackedPath = path.join(
+            process.resourcesPath,
+            'app.asar.unpacked',
+            'node_modules',
+            'serialport',
+        );
+        return require(unpackedPath);
     }
 })();
-
-// eslint-disable-next-line import/no-dynamic-require
-const { SerialPort } = require(resolve(asarPath, 'node_modules', 'serialport'));
 
 let port = null;
 process.on('message', msg => {

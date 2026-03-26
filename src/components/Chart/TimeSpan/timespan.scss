@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: LicenseRef-Nordic-4-Clause
  */
-@import '~@nordicsemiconductor/pc-nrfconnect-shared/styles';
+$white: #ffffff;
+$gray-50: #f8f9fa;
+$gray-100: #f2f2f2;
+$gray-700: #495057;
+$nordic-blue: #0069c2;
 
 .timespan {
     margin-left: 64px;

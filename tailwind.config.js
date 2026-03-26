@@ -1,11 +1,14 @@
-/*
- * Copyright (c) 2023 Nordic Semiconductor ASA
- *
- * SPDX-License-Identifier: LicenseRef-Nordic-4-Clause
- */
-
-const baseConfig = require('@nordicsemiconductor/pc-nrfconnect-shared/config/tailwind.config.js');
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    ...baseConfig,
+    content: ['./src/**/*.{ts,tsx}', './index.html'],
+    prefix: 'tw-',
+    theme: {
+        extend: {
+            colors: {
+                'nordic-blue': '#0069C2',
+                primary: '#0069C2',
+            },
+        },
+    },
+    plugins: [],
 };
