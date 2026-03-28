@@ -54,6 +54,7 @@
     "build": {
         "appId": "com.nordicsemiconductor.ppk",
         "productName": "Power Profiler",
+        "npmRebuild": false,
         "directories": {
             "output": "release"
         },
@@ -73,7 +74,8 @@
             "target": "AppImage"
         },
         "win": {
-            "target": "nsis"
+            "target": "portable",
+            "signAndEditExecutable": false
         },
         "mac": {
             "target": "dmg"

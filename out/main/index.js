@@ -4,6 +4,7 @@ const main = require("@electron/remote/main");
 const ElectronStore = require("electron-store");
 const serialport = require("serialport");
 const path = require("path");
+process.env["PREBUILDS_ONLY"] = "1";
 main.initialize();
 ElectronStore.initRenderer();
 let mainWindow = null;

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-4-Clause
  */
 
+// Force node-gyp-build to use prebuilds/ instead of build/Release/ so the
+// correct platform binary is loaded regardless of what was compiled locally.
+process.env['PREBUILDS_ONLY'] = '1';
+
 // Resolve serialport from the local node_modules (standalone app).
 // In production the native .node addon must be in app.asar.unpacked,
 // which electron-builder handles via the asarUnpack option.

@@ -4,7 +4,12 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-4-Clause
  */
 
-import { app, BrowserWindow, dialog, ipcMain, Menu, shell } from 'electron';
+// Force node-gyp-build to use prebuilds/ instead of build/Release/.
+// Without this, the Linux-compiled build/Release/bindings.node takes priority
+// over the correct platform-specific prebuild (e.g. win32-x64).
+process.env['PREBUILDS_ONLY'] = '1';
+
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import { initialize, enable } from '@electron/remote/main';
 import ElectronStore from 'electron-store';
 import { SerialPort } from 'serialport';
