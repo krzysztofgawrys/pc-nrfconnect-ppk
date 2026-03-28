@@ -1,19 +1,3 @@
-import electronLog from "electron-log/renderer";
-import { ipcRenderer } from "electron";
-import { getCurrentWindow, dialog } from "@electron/remote";
-import path, { join, dirname } from "path";
-import fs$1 from "fs-extra";
-import fs from "fs";
-import EventEmitter$1, { EventEmitter } from "events";
-import os from "os";
-import { fork, exec } from "child_process";
-import fs$2 from "fs/promises";
-import { Buffer as Buffer$1, kMaxLength } from "buffer";
-import { Transform, Writable, pipeline } from "stream";
-import unzipper from "unzipper";
-import { promisify } from "util";
-import { createInflateRaw } from "zlib";
-import archiver from "archiver";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x2) {
   return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
@@ -15303,15 +15287,15 @@ function _getInterpolationMethod(options2) {
   return _pointInLine;
 }
 function strokePathWithCache(ctx, line, start, count) {
-  let path2 = line._path;
-  if (!path2) {
-    path2 = line._path = new Path2D();
-    if (line.path(path2, start, count)) {
-      path2.closePath();
+  let path = line._path;
+  if (!path) {
+    path = line._path = new Path2D();
+    if (line.path(path, start, count)) {
+      path.closePath();
     }
   }
   setStyle(ctx, line.options);
-  ctx.stroke(path2);
+  ctx.stroke(path);
 }
 function strokePathDirect(ctx, line, start, count) {
   const { segments, options: options2 } = line;
@@ -16654,6 +16638,44 @@ function clsx() {
   for (var e, t2, f2 = 0, n3 = "", o = arguments.length; f2 < o; f2++) (e = arguments[f2]) && (t2 = r(e)) && (n3 && (n3 += " "), n3 += t2);
   return n3;
 }
+const _m$f = require("electron-log/renderer");
+_m$f.dependencies;
+_m$f.errorHandler;
+_m$f.eventLogger;
+_m$f.functions;
+_m$f.hooks;
+_m$f.isDev;
+_m$f.levels;
+_m$f.logId;
+_m$f.scope;
+_m$f.transports;
+_m$f.variables;
+_m$f.addLevel;
+_m$f.create;
+_m$f.initialize;
+_m$f.logData;
+_m$f.processMessage;
+_m$f.allowUnknownLevel;
+_m$f.buffering;
+_m$f.initializeFn;
+_m$f.transportFactories;
+_m$f.error;
+_m$f.warn;
+_m$f.info;
+_m$f.verbose;
+_m$f.debug;
+_m$f.silly;
+_m$f.log;
+_m$f.Logger;
+const _m$e = require("electron");
+const ipcRenderer = _m$e.ipcRenderer;
+_m$e.webFrame;
+_m$e.contextBridge;
+_m$e.clipboard;
+_m$e.nativeImage;
+_m$e.shell;
+_m$e.desktopCapturer;
+_m$e.crashReporter;
 function formatProdErrorMessage$1(code2) {
   return `Minified Redux error #${code2}; visit https://redux.js.org/Errors?code=${code2} for the full message or use the non-minified dev environment for full errors. `;
 }
@@ -18265,10 +18287,10 @@ const confirmSlice = createSlice({
 const { addConfirmBeforeClose: addConfirmBeforeClose$1, clearConfirmBeforeClose: clearConfirmBeforeClose$1 } = confirmSlice.actions;
 const confirmReducer = confirmSlice.reducer;
 const logger$1 = {
-  info: (msg, ...args) => electronLog.info(msg, ...args),
-  warn: (msg, ...args) => electronLog.warn(msg, ...args),
-  error: (msg, ...args) => electronLog.error(msg, ...args),
-  debug: (msg, ...args) => electronLog.debug(msg, ...args)
+  info: (msg, ...args) => _m$f.info(msg, ...args),
+  warn: (msg, ...args) => _m$f.warn(msg, ...args),
+  error: (msg, ...args) => _m$f.error(msg, ...args),
+  debug: (msg, ...args) => _m$f.debug(msg, ...args)
 };
 const telemetry = {
   enableTelemetry: (..._args) => {
@@ -18890,6 +18912,45 @@ const InfoDialog = Object.assign(
   }),
   { Body: DialogBody }
 );
+const _m$d = require("@electron/remote");
+_m$d.getBuiltin;
+const getCurrentWindow = _m$d.getCurrentWindow;
+_m$d.getCurrentWebContents;
+_m$d.getGlobal;
+_m$d.createFunctionWithReturnValue;
+_m$d.app;
+_m$d.BrowserWindow;
+const dialog = _m$d.dialog;
+_m$d.Menu;
+_m$d.MenuItem;
+_m$d.shell;
+_m$d.Tray;
+_m$d.screen;
+_m$d.clipboard;
+_m$d.nativeImage;
+_m$d.powerMonitor;
+_m$d.systemPreferences;
+_m$d.desktopCapturer;
+_m$d.crashReporter;
+_m$d.webContents;
+const _m$c = require("path");
+_m$c.resolve;
+_m$c.normalize;
+_m$c.isAbsolute;
+const join = _m$c.join;
+_m$c.relative;
+_m$c.toNamespacedPath;
+const dirname = _m$c.dirname;
+_m$c.basename;
+_m$c.extname;
+_m$c.format;
+_m$c.parse;
+_m$c.matchesGlob;
+_m$c.sep;
+_m$c.delimiter;
+_m$c.win32;
+_m$c.posix;
+_m$c._makeLong;
 var getRandomValues;
 var rnds8 = new Uint8Array(16);
 function rng() {
@@ -18924,8 +18985,262 @@ function v4(options2, buf, offset) {
   rnds[8] = rnds[8] & 63 | 128;
   return stringify(rnds);
 }
+const _m$b = require("fs-extra");
+_m$b.appendFile;
+_m$b.appendFileSync;
+_m$b.access;
+_m$b.accessSync;
+_m$b.chown;
+_m$b.chownSync;
+_m$b.chmod;
+_m$b.chmodSync;
+_m$b.close;
+_m$b.closeSync;
+_m$b.copyFile;
+_m$b.copyFileSync;
+_m$b.cp;
+_m$b.cpSync;
+_m$b.createReadStream;
+_m$b.createWriteStream;
+_m$b.exists;
+_m$b.existsSync;
+_m$b.fchown;
+_m$b.fchownSync;
+_m$b.fchmod;
+_m$b.fchmodSync;
+_m$b.fdatasync;
+_m$b.fdatasyncSync;
+_m$b.fstat;
+_m$b.fstatSync;
+_m$b.fsync;
+_m$b.fsyncSync;
+_m$b.ftruncate;
+_m$b.ftruncateSync;
+_m$b.futimes;
+_m$b.futimesSync;
+_m$b.glob;
+_m$b.globSync;
+_m$b.lchown;
+_m$b.lchownSync;
+_m$b.lchmod;
+_m$b.lchmodSync;
+_m$b.link;
+_m$b.linkSync;
+_m$b.lstat;
+_m$b.lstatSync;
+_m$b.lutimes;
+_m$b.lutimesSync;
+_m$b.mkdir;
+_m$b.mkdirSync;
+_m$b.mkdtemp;
+_m$b.mkdtempSync;
+_m$b.mkdtempDisposableSync;
+_m$b.open;
+_m$b.openSync;
+_m$b.openAsBlob;
+_m$b.readdir;
+_m$b.readdirSync;
+_m$b.read;
+_m$b.readSync;
+_m$b.readv;
+_m$b.readvSync;
+_m$b.readFile;
+_m$b.readFileSync;
+_m$b.readlink;
+_m$b.readlinkSync;
+_m$b.realpath;
+_m$b.realpathSync;
+_m$b.rename;
+_m$b.renameSync;
+_m$b.rm;
+_m$b.rmSync;
+_m$b.rmdir;
+_m$b.rmdirSync;
+_m$b.stat;
+_m$b.statfs;
+_m$b.statSync;
+_m$b.statfsSync;
+_m$b.symlink;
+_m$b.symlinkSync;
+_m$b.truncate;
+_m$b.truncateSync;
+_m$b.unwatchFile;
+_m$b.unlink;
+_m$b.unlinkSync;
+_m$b.utimes;
+_m$b.utimesSync;
+_m$b.watch;
+_m$b.watchFile;
+_m$b.writeFile;
+_m$b.writeFileSync;
+_m$b.write;
+_m$b.writeSync;
+_m$b.writev;
+_m$b.writevSync;
+_m$b.Dirent;
+_m$b.Stats;
+_m$b.ReadStream;
+_m$b.WriteStream;
+_m$b.FileReadStream;
+_m$b.FileWriteStream;
+_m$b.Utf8Stream;
+_m$b._toUnixTimestamp;
+_m$b.Dir;
+_m$b.opendir;
+_m$b.opendirSync;
+_m$b.constants;
+_m$b.gracefulify;
+_m$b.copySync;
+_m$b.copy;
+_m$b.emptyDirSync;
+_m$b.emptydirSync;
+_m$b.emptyDir;
+_m$b.emptydir;
+_m$b.createFile;
+_m$b.createFileSync;
+_m$b.ensureFile;
+_m$b.ensureFileSync;
+_m$b.createLink;
+_m$b.createLinkSync;
+_m$b.ensureLink;
+_m$b.ensureLinkSync;
+_m$b.createSymlink;
+_m$b.createSymlinkSync;
+_m$b.ensureSymlink;
+_m$b.ensureSymlinkSync;
+_m$b.readJson;
+_m$b.readJsonSync;
+_m$b.writeJson;
+_m$b.writeJsonSync;
+_m$b.outputJson;
+_m$b.outputJsonSync;
+_m$b.outputJSON;
+_m$b.outputJSONSync;
+_m$b.writeJSON;
+_m$b.writeJSONSync;
+_m$b.readJSON;
+_m$b.readJSONSync;
+_m$b.mkdirs;
+_m$b.mkdirsSync;
+_m$b.mkdirp;
+_m$b.mkdirpSync;
+_m$b.ensureDir;
+_m$b.ensureDirSync;
+_m$b.moveSync;
+_m$b.move;
+_m$b.outputFile;
+_m$b.outputFileSync;
+_m$b.pathExists;
+_m$b.pathExistsSync;
+_m$b.remove;
+_m$b.removeSync;
+const _m$a = require("fs");
+_m$a.appendFile;
+_m$a.appendFileSync;
+_m$a.access;
+_m$a.accessSync;
+_m$a.chown;
+_m$a.chownSync;
+_m$a.chmod;
+_m$a.chmodSync;
+_m$a.close;
+_m$a.closeSync;
+_m$a.copyFile;
+_m$a.copyFileSync;
+_m$a.cp;
+_m$a.cpSync;
+_m$a.createReadStream;
+_m$a.createWriteStream;
+_m$a.exists;
+_m$a.existsSync;
+_m$a.fchown;
+_m$a.fchownSync;
+_m$a.fchmod;
+_m$a.fchmodSync;
+_m$a.fdatasync;
+_m$a.fdatasyncSync;
+_m$a.fstat;
+_m$a.fstatSync;
+_m$a.fsync;
+_m$a.fsyncSync;
+_m$a.ftruncate;
+_m$a.ftruncateSync;
+_m$a.futimes;
+_m$a.futimesSync;
+_m$a.glob;
+_m$a.globSync;
+_m$a.lchown;
+_m$a.lchownSync;
+_m$a.lchmod;
+_m$a.lchmodSync;
+_m$a.link;
+_m$a.linkSync;
+_m$a.lstat;
+_m$a.lstatSync;
+_m$a.lutimes;
+_m$a.lutimesSync;
+_m$a.mkdir;
+_m$a.mkdirSync;
+_m$a.mkdtemp;
+_m$a.mkdtempSync;
+_m$a.mkdtempDisposableSync;
+_m$a.open;
+_m$a.openSync;
+_m$a.openAsBlob;
+_m$a.readdir;
+_m$a.readdirSync;
+_m$a.read;
+_m$a.readSync;
+_m$a.readv;
+_m$a.readvSync;
+_m$a.readFile;
+_m$a.readFileSync;
+_m$a.readlink;
+_m$a.readlinkSync;
+_m$a.realpath;
+_m$a.realpathSync;
+_m$a.rename;
+_m$a.renameSync;
+_m$a.rm;
+_m$a.rmSync;
+_m$a.rmdir;
+_m$a.rmdirSync;
+_m$a.stat;
+_m$a.statfs;
+_m$a.statSync;
+_m$a.statfsSync;
+_m$a.symlink;
+_m$a.symlinkSync;
+_m$a.truncate;
+_m$a.truncateSync;
+_m$a.unwatchFile;
+_m$a.unlink;
+_m$a.unlinkSync;
+_m$a.utimes;
+_m$a.utimesSync;
+_m$a.watch;
+_m$a.watchFile;
+_m$a.writeFile;
+_m$a.writeFileSync;
+_m$a.write;
+_m$a.writeSync;
+_m$a.writev;
+_m$a.writevSync;
+_m$a.Dirent;
+_m$a.Stats;
+_m$a.ReadStream;
+_m$a.WriteStream;
+_m$a.FileReadStream;
+_m$a.FileWriteStream;
+_m$a.Utf8Stream;
+_m$a._toUnixTimestamp;
+_m$a.Dir;
+_m$a.opendir;
+_m$a.opendirSync;
+_m$a.constants;
+_m$a.promises;
 const appDataFolder = getAppDataDir();
-const sessionsListFilePath = path.join(appDataFolder, "sessions.ppksess");
+const sessionsListFilePath = _m$c.join(appDataFolder, "sessions.ppksess");
 const lineFormatRegex = /^\d+\t\d+(\.\d+)?\t\d+\t.+$/;
 var SessionFlag = /* @__PURE__ */ ((SessionFlag2) => {
   SessionFlag2[SessionFlag2["NotRecovered"] = 0] = "NotRecovered";
@@ -18934,11 +19249,11 @@ var SessionFlag = /* @__PURE__ */ ((SessionFlag2) => {
   return SessionFlag2;
 })(SessionFlag || {});
 const ReadSessions = async () => {
-  if (!fs.existsSync(sessionsListFilePath)) {
-    await fs.promises.writeFile(sessionsListFilePath, "");
+  if (!_m$a.existsSync(sessionsListFilePath)) {
+    await _m$a.promises.writeFile(sessionsListFilePath, "");
     return [];
   }
-  const sessionsList = await fs.promises.readFile(sessionsListFilePath, {
+  const sessionsList = await _m$a.promises.readFile(sessionsListFilePath, {
     encoding: "utf8"
   });
   const lines = sessionsList.split(/\r?\n/);
@@ -18958,7 +19273,7 @@ const WriteSessions = async (sessions) => {
   const sessionsList = sessions.map(
     (session) => `${session.pid}	${session.startTime}	${session.samplingRate}	${Number(session.flag)}	${session.filePath}`
   ).join("\n");
-  await fs.promises.writeFile(sessionsListFilePath, sessionsList);
+  await _m$a.promises.writeFile(sessionsListFilePath, sessionsList);
 };
 const AddSession = async (startTime, samplingRate, flag, filePath) => {
   const session = {
@@ -18973,15 +19288,15 @@ const AddSession = async (startTime, samplingRate, flag, filePath) => {
   await WriteSessions(sessions);
 };
 const RemoveSessionByFilePath = async (filePath, onComplete) => {
-  const directory = path.dirname(filePath);
+  const directory = _m$c.dirname(filePath);
   const sessions = await ReadSessions();
   const sessionIndex = sessions.findIndex(
     (session) => session.filePath === filePath
   );
   if (sessionIndex !== -1) {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-      fs.rmSync(directory, { recursive: true, force: true });
+    if (_m$a.existsSync(filePath)) {
+      _m$a.unlinkSync(filePath);
+      _m$a.rmSync(directory, { recursive: true, force: true });
     }
     sessions.splice(sessionIndex, 1);
     await WriteSessions(sessions);
@@ -18997,10 +19312,10 @@ const DeleteAllSessions = async (onProgress, onComplete) => {
       return;
     }
     const session = sessions[index];
-    const directory = path.dirname(session.filePath);
-    if (fs.existsSync(session.filePath)) {
-      fs.unlinkSync(session.filePath);
-      fs.rmSync(directory, { recursive: true, force: true });
+    const directory = _m$c.dirname(session.filePath);
+    if (_m$a.existsSync(session.filePath)) {
+      _m$a.unlinkSync(session.filePath);
+      _m$a.rmSync(directory, { recursive: true, force: true });
     }
     setTimeout(() => deleteSession(index + 1), 0);
   };
@@ -19293,13 +19608,13 @@ class FileBuffer {
     this.#autoClean = autoClean;
     this.#numberOfReadPages = numberOfReadPages;
     this.#bufferPageSize = bufferPageSize;
-    this.#filePath = path.join(filePath.toString(), "session.raw");
-    if (fs$1.existsSync(filePath)) {
+    this.#filePath = _m$c.join(filePath.toString(), "session.raw");
+    if (_m$b.existsSync(filePath)) {
       logger$1.debug(
         `Loading temporary ppk session file sessionFile ${filePath}`
       );
-      this.#fileSize = fs$1.statSync(this.#filePath).size;
-      this.#fileHandle = fs$1.openSync(this.#filePath, "r");
+      this.#fileSize = _m$b.statSync(this.#filePath).size;
+      this.#fileHandle = _m$b.openSync(this.#filePath, "r");
       this.#firstWriteTime = firstWriteTime;
     } else {
       this.#writeBuffer = new WriteBuffer(
@@ -19335,11 +19650,11 @@ class FileBuffer {
       }
       if (!this.#fileHandle) {
         const sessionDir = this.getSessionFolder();
-        if (!fs$1.existsSync(sessionDir)) fs$1.mkdirSync(sessionDir);
+        if (!_m$b.existsSync(sessionDir)) _m$b.mkdirSync(sessionDir);
         logger$1.debug(
           `Creating temporary ppk session file sessionFile ${this.#filePath}`
         );
-        this.#fileHandle = fs$1.openSync(this.#filePath, "as+");
+        this.#fileHandle = _m$b.openSync(this.#filePath, "as+");
         AddSession(
           Date.now(),
           this.samplingRate ? this.samplingRate : 1e5,
@@ -19357,7 +19672,7 @@ class FileBuffer {
         this.fileOperationTasks.push(() => {
           if (!this.#fileHandle)
             throw new Error("Invalid File handle");
-          return fs$1.appendFile(this.#fileHandle, activePage.page).finally(() => {
+          return _m$b.appendFile(this.#fileHandle, activePage.page).finally(() => {
             this.#fileWriteListeners.forEach((l2) => l2());
             resolve2();
           });
@@ -19366,7 +19681,7 @@ class FileBuffer {
         this.fileOperationTasks.push(() => {
           if (!this.#fileHandle)
             throw new Error("Invalid File handle");
-          return fs$1.appendFile(
+          return _m$b.appendFile(
             this.#fileHandle,
             activePage.page.subarray(
               0,
@@ -19402,7 +19717,7 @@ class FileBuffer {
     return writeBuffer.append(data);
   }
   getSessionInBytes() {
-    return this.#writeBuffer?.getBytesWritten() ?? this.#fileSize ?? fs$1.statSync(this.#filePath).size;
+    return this.#writeBuffer?.getBytesWritten() ?? this.#fileSize ?? _m$b.statSync(this.#filePath).size;
   }
   #readRange = (buffer, bytesToRead, fileOffset, beforeRun, abortController) => new Promise((res) => {
     const fileHandle = this.#fileHandle;
@@ -19418,7 +19733,7 @@ class FileBuffer {
           return;
         }
         beforeRun?.();
-        fs$1.read(
+        _m$b.read(
           fileHandle,
           buffer,
           0,
@@ -19649,30 +19964,30 @@ class FileBuffer {
     if (this.#writeBuffer) {
       await this.#writeActivePage();
       if (this.#fileHandle) {
-        fs$1.fdatasyncSync(this.#fileHandle);
+        _m$b.fdatasyncSync(this.#fileHandle);
       }
     }
   }
   async close(flush = true) {
     if (this.#fileHandle) {
       if (flush) await this.flush();
-      fs$1.closeSync(this.#fileHandle);
+      _m$b.closeSync(this.#fileHandle);
       this.#fileHandle = void 0;
     }
   }
   release() {
     window.removeEventListener("beforeunload", this.#beforeUnload);
-    if (fs$1.existsSync(this.#filePath)) {
-      const dir = path.parse(this.#filePath).dir;
+    if (_m$b.existsSync(this.#filePath)) {
+      const dir = _m$c.parse(this.#filePath).dir;
       logger$1.debug(`Deleting temporary ppk session at ${dir}`);
-      fs$1.unlinkSync(this.#filePath);
-      fs$1.rmSync(dir, { recursive: true, force: true });
+      _m$b.unlinkSync(this.#filePath);
+      _m$b.rmSync(dir, { recursive: true, force: true });
       RemoveSessionByFilePath(this.#filePath, () => {
       });
     }
   }
   getSessionFolder() {
-    return path.parse(this.#filePath).dir;
+    return _m$c.parse(this.#filePath).dir;
   }
   getFirstWriteTime() {
     return this.#writeBuffer?.getFirstWriteTime() ?? this.#firstWriteTime;
@@ -19785,8 +20100,8 @@ class FoldingBuffer {
     return this.out.slice(0, this.data.length * 2);
   }
   saveToFile(sessionPath) {
-    fs$1.writeFileSync(
-      path.join(sessionPath, "minimap.raw"),
+    _m$b.writeFileSync(
+      _m$c.join(sessionPath, "minimap.raw"),
       JSON.stringify({
         lastElementFoldCount: this.lastElementFoldCount,
         data: this.data,
@@ -19797,7 +20112,7 @@ class FoldingBuffer {
   }
   loadFromFile(sessionPath) {
     const result = JSON.parse(
-      fs$1.readFileSync(path.join(sessionPath, "minimap.raw")).toString()
+      _m$b.readFileSync(_m$c.join(sessionPath, "minimap.raw")).toString()
     );
     this.lastElementFoldCount = result.lastElementFoldCount;
     this.data = result.data;
@@ -19984,7 +20299,7 @@ const DataManager = () => ({
     options.inSyncOffset = 0;
   },
   initializeLiveSession: (sessionRootPath) => {
-    const sessionPath = path.join(sessionRootPath, v4());
+    const sessionPath = _m$c.join(sessionRootPath, v4());
     options.fileBuffer = new FileBuffer(
       10 * getSamplesPerSecond() * frameSize,
       // 6 bytes per sample for and 10sec buffers at chosen sampling rate (save data every 10 seconds)
@@ -20001,7 +20316,7 @@ const DataManager = () => ({
     );
   },
   createSessionData: async (buffer, sessionRootPath, startSystemTime, onProgress) => {
-    const sessionPath = path.join(sessionRootPath, v4());
+    const sessionPath = _m$c.join(sessionRootPath, v4());
     const fileBuffer = new FileBuffer(
       10 * 1e5 * frameSize,
       // 6 bytes per sample for and 10sec buffers at highest sampling rate
@@ -20297,8 +20612,8 @@ const setDuration = (maxSampleFreq, duration) => {
   store$1.set(`duration-${maxSampleFreq}`, duration);
 };
 const getPreferredSessionLocation = (defaultValue) => store$1.get(`session-root-folder`, defaultValue);
-const setPreferredSessionLocation = (path2) => {
-  store$1.set(`session-root-folder`, path2);
+const setPreferredSessionLocation = (path) => {
+  store$1.set(`session-root-folder`, path);
 };
 const getDiskFullTrigger$1 = (defaultValue) => store$1.get(`disk-full-trigger`, defaultValue);
 const setDiskFullTrigger$1 = (sizeInMb) => {
@@ -20977,6 +21292,22 @@ function initializeMinimapChart(minimapRef, canvasRef, yAxisLog) {
   }
   return null;
 }
+const _m$9 = require("events");
+_m$9.addAbortListener;
+_m$9.once;
+_m$9.on;
+_m$9.getEventListeners;
+_m$9.getMaxListeners;
+_m$9.listenerCount;
+const EventEmitter = _m$9.EventEmitter;
+_m$9.usingDomains;
+_m$9.captureRejectionSymbol;
+_m$9.captureRejections;
+_m$9.EventEmitterAsyncResource;
+_m$9.errorMonitor;
+_m$9.defaultMaxListeners;
+_m$9.setMaxListeners;
+_m$9.init;
 var HotkeyActionType = /* @__PURE__ */ ((HotkeyActionType2) => {
   HotkeyActionType2["SELECT_ALL"] = "SELECT_ALL";
   HotkeyActionType2["SELECT_NONE"] = "SELECT_NONE";
@@ -21016,6 +21347,30 @@ const useLazyInitializedRef = (initialiser) => {
   return ref;
 };
 const isInitialised = (processor) => processor !== uninitialisedToken;
+const _m$8 = require("os");
+_m$8.arch;
+_m$8.availableParallelism;
+_m$8.cpus;
+_m$8.endianness;
+_m$8.freemem;
+_m$8.getPriority;
+_m$8.homedir;
+_m$8.hostname;
+_m$8.loadavg;
+_m$8.networkInterfaces;
+_m$8.platform;
+_m$8.release;
+_m$8.setPriority;
+_m$8.tmpdir;
+_m$8.totalmem;
+_m$8.type;
+_m$8.userInfo;
+_m$8.uptime;
+_m$8.version;
+_m$8.machine;
+_m$8.constants;
+_m$8.EOL;
+_m$8.devNull;
 const initialState$5 = () => ({
   portName: null,
   metadata: [],
@@ -21085,7 +21440,7 @@ const appSlice = createSlice({
 const isSamplingRunning = (state) => state.app.app.samplingRunning;
 const appState = (state) => state.app.app;
 const deviceOpen = (state) => Object.keys(state.app.app.capabilities).length > 0;
-const getSessionRootFolder = (state) => state.app.app.sessionFolder ?? getPreferredSessionLocation(os.tmpdir());
+const getSessionRootFolder = (state) => state.app.app.sessionFolder ?? getPreferredSessionLocation(_m$8.tmpdir());
 const getDiskFullTrigger = (state) => state.app.app.diskFullLimitMb ?? getDiskFullTrigger$1(4096);
 const isSavePending = (state) => state.app.app.savePending;
 const isSessionRecoveryPending = (state) => state.app.app.sessionRecoveryPending;
@@ -38240,6 +38595,16 @@ const Chart2 = () => {
   ] });
 };
 const describeError = (e) => e instanceof Error ? e.message : String(e);
+const _m$7 = require("child_process");
+_m$7._forkChild;
+_m$7.ChildProcess;
+const exec = _m$7.exec;
+_m$7.execFile;
+_m$7.execFileSync;
+_m$7.execSync;
+const fork = _m$7.fork;
+_m$7.spawn;
+_m$7.spawnSync;
 const PPKCommands = {
   AverageStart: 6,
   AverageStop: 7,
@@ -38261,7 +38626,7 @@ function convertFloatToByteBuffer(floatnum) {
   const bytes = new Uint8Array(float.buffer);
   return bytes;
 }
-class Device extends EventEmitter$1 {
+class Device extends _m$9 {
   currentVdd = 0;
   triggerWindowRange = { min: 1, max: 10 };
   capabilities;
@@ -38346,7 +38711,7 @@ class SerialDevice extends Device {
     };
     this.path = device2.serialPorts?.at(0)?.comName;
     this.child = fork(
-      path.resolve(getAppDir(), "worker", "serialDevice.js")
+      _m$c.resolve(getAppDir(), "worker", "serialDevice.js")
     );
     this.parser = null;
     this.resetDataLossCounter();
@@ -38621,6 +38986,40 @@ const {
   resetVoltageRegulatorMaxCapPPK2
 } = voltageRegulatorSlice.actions;
 const voltageRegulator = voltageRegulatorSlice.reducer;
+const _m$6 = require("fs/promises");
+_m$6.access;
+_m$6.copyFile;
+_m$6.cp;
+_m$6.glob;
+_m$6.open;
+_m$6.opendir;
+_m$6.rename;
+_m$6.truncate;
+_m$6.rm;
+_m$6.rmdir;
+_m$6.mkdir;
+_m$6.readdir;
+_m$6.readlink;
+_m$6.symlink;
+_m$6.lstat;
+_m$6.stat;
+_m$6.statfs;
+_m$6.link;
+_m$6.unlink;
+_m$6.chmod;
+_m$6.lchmod;
+_m$6.lchown;
+_m$6.chown;
+_m$6.utimes;
+_m$6.lutimes;
+_m$6.realpath;
+_m$6.mkdtemp;
+_m$6.mkdtempDisposable;
+_m$6.writeFile;
+_m$6.appendFile;
+_m$6.readFile;
+_m$6.watch;
+_m$6.constants;
 const calcFileSize = (bytes, formatOptions = { notation: "fixed", precision: 1 }) => {
   if (bytes > 1024 * 1024 * 1024 * 1024) {
     return unit$1(bytes, "byte").to("TB").format(formatOptions);
@@ -38650,20 +39049,20 @@ const selectDirectoryDialog = (defaultPath) => new Promise((resolve2, reject) =>
   }).catch(reject);
 });
 const isDiskFull = async (triggerLimit, dstPath) => {
-  const stats = await fs$2.statfs(dstPath);
+  const stats = await _m$6.statfs(dstPath);
   const freeDiskSpaceBytes = stats.bfree * stats.bsize;
   const freeSpaceBytes = freeDiskSpaceBytes;
   return freeSpaceBytes < triggerLimit * 1024 * 1024;
 };
 const getFreeSpace = async (triggerLimit, dstPath) => {
-  const stats = await fs$2.statfs(dstPath);
+  const stats = await _m$6.statfs(dstPath);
   const freeDiskSpaceBytes = stats.bfree * stats.bsize;
   const freeSpaceBytes = freeDiskSpaceBytes;
   return freeSpaceBytes - triggerLimit * 1024 * 1024;
 };
 const remainingTime = (freeSpaceMB, samplesPerSecond) => indexToTimestamp(freeSpaceMB / frameSize, samplesPerSecond);
 const canFileFit = async (triggerLimit, fileSizeBytes, dstPath) => {
-  const stats = await fs$2.statfs(dstPath);
+  const stats = await _m$6.statfs(dstPath);
   const freeDiskSpaceBytes = stats.bfree * stats.bsize - triggerLimit * 1024 * 1024;
   return freeDiskSpaceBytes >= fileSizeBytes;
 };
@@ -44458,22 +44857,153 @@ function deserialize(buffer, options2) {
   }
   return deserialize$1(buffer instanceof buffer_1 ? buffer : ensureBuffer(buffer), options2);
 }
+const _m$5 = require("buffer");
+const Buffer$1 = _m$5.Buffer;
+_m$5.SlowBuffer;
+_m$5.transcode;
+_m$5.isUtf8;
+_m$5.isAscii;
+const kMaxLength = _m$5.kMaxLength;
+_m$5.kStringMaxLength;
+_m$5.btoa;
+_m$5.atob;
+_m$5.constants;
+_m$5.INSPECT_MAX_BYTES;
+_m$5.Blob;
+_m$5.resolveObjectURL;
+_m$5.File;
+const _m$4 = require("stream");
+_m$4.isDestroyed;
+_m$4.isDisturbed;
+_m$4.isErrored;
+_m$4.isReadable;
+_m$4.isWritable;
+_m$4.Readable;
+const Writable = _m$4.Writable;
+_m$4.Duplex;
+const Transform = _m$4.Transform;
+_m$4.PassThrough;
+_m$4.duplexPair;
+const pipeline = _m$4.pipeline;
+_m$4.addAbortSignal;
+_m$4.finished;
+_m$4.destroy;
+_m$4.compose;
+_m$4.setDefaultHighWaterMark;
+_m$4.getDefaultHighWaterMark;
+_m$4.promises;
+_m$4.Stream;
+_m$4._isArrayBufferView;
+_m$4._isUint8Array;
+_m$4._uint8ArrayToBuffer;
+const _m$3 = require("unzipper");
+_m$3.Parse;
+_m$3.ParseOne;
+_m$3.Extract;
+_m$3.Open;
+const _m$2 = require("util");
+_m$2._errnoException;
+_m$2._exceptionWithHostPort;
+_m$2._extend;
+_m$2.callbackify;
+_m$2.convertProcessSignalToExitCode;
+_m$2.debug;
+_m$2.debuglog;
+_m$2.deprecate;
+_m$2.format;
+_m$2.styleText;
+_m$2.formatWithOptions;
+_m$2.getCallSites;
+_m$2.getSystemErrorMap;
+_m$2.getSystemErrorName;
+_m$2.getSystemErrorMessage;
+_m$2.inherits;
+_m$2.inspect;
+_m$2.isArray;
+_m$2.isDeepStrictEqual;
+const promisify = _m$2.promisify;
+_m$2.stripVTControlCharacters;
+_m$2.toUSVString;
+_m$2.transferableAbortSignal;
+_m$2.transferableAbortController;
+_m$2.aborted;
+_m$2.types;
+_m$2.parseEnv;
+_m$2.parseArgs;
+_m$2.TextDecoder;
+_m$2.TextEncoder;
+_m$2.MIMEType;
+_m$2.MIMEParams;
+_m$2.diff;
+_m$2.setTraceSigInt;
+const _m$1 = require("zlib");
+_m$1.crc32;
+_m$1.Deflate;
+_m$1.Inflate;
+_m$1.Gzip;
+_m$1.Gunzip;
+_m$1.DeflateRaw;
+_m$1.InflateRaw;
+_m$1.Unzip;
+_m$1.BrotliCompress;
+_m$1.BrotliDecompress;
+_m$1.ZstdCompress;
+_m$1.ZstdDecompress;
+_m$1.deflate;
+_m$1.deflateSync;
+_m$1.gzip;
+_m$1.gzipSync;
+_m$1.deflateRaw;
+_m$1.deflateRawSync;
+_m$1.unzip;
+_m$1.unzipSync;
+_m$1.inflate;
+_m$1.inflateSync;
+_m$1.gunzip;
+_m$1.gunzipSync;
+_m$1.inflateRaw;
+_m$1.inflateRawSync;
+_m$1.brotliCompress;
+_m$1.brotliCompressSync;
+_m$1.brotliDecompress;
+_m$1.brotliDecompressSync;
+_m$1.zstdCompress;
+_m$1.zstdCompressSync;
+_m$1.zstdDecompress;
+_m$1.zstdDecompressSync;
+_m$1.createDeflate;
+_m$1.createInflate;
+_m$1.createDeflateRaw;
+const createInflateRaw = _m$1.createInflateRaw;
+_m$1.createGzip;
+_m$1.createGunzip;
+_m$1.createUnzip;
+_m$1.createBrotliCompress;
+_m$1.createBrotliDecompress;
+_m$1.createZstdCompress;
+_m$1.createZstdDecompress;
+_m$1.constants;
+_m$1.codes;
+const _m = require("archiver");
+_m.create;
+_m.registerFormat;
+_m.isRegisteredFormat;
 const CURRENT_VERSION = 2;
 const saveData = async (filename, metadata, fileBuffer, foldingBuffer, onProgress) => {
   await startPreventSleep();
   const sessionFolder = fileBuffer.getSessionFolder();
-  if (!fs$1.existsSync(sessionFolder)) {
-    fs$1.mkdirSync(sessionFolder);
+  if (!_m$b.existsSync(sessionFolder)) {
+    _m$b.mkdirSync(sessionFolder);
   }
-  const metaPath = path.join(sessionFolder, "metadata.json");
+  const metaPath = _m$c.join(sessionFolder, "metadata.json");
   await fileBuffer.flush();
   foldingBuffer.saveToFile(sessionFolder);
-  fs$1.writeFileSync(
+  _m$b.writeFileSync(
     metaPath,
     JSON.stringify({ ...metadata, formatVersion: CURRENT_VERSION })
   );
-  const output = fs$1.createWriteStream(filename);
-  const archive = archiver("zip", {
+  const output = _m$b.createWriteStream(filename);
+  const archive = _m("zip", {
     zlib: { level: 6 }
     // Sets the compression level.
   });
@@ -44497,13 +45027,13 @@ const saveData = async (filename, metadata, fileBuffer, foldingBuffer, onProgres
   });
   archive.directory(sessionFolder, false);
   const cleanUp = () => {
-    fs$1.rmSync(filename, { recursive: true, force: true });
+    _m$b.rmSync(filename, { recursive: true, force: true });
   };
   window.addEventListener("beforeunload", cleanUp);
   try {
     await archive.finalize();
     window.removeEventListener("beforeunload", cleanUp);
-    fs$1.rmSync(metaPath);
+    _m$b.rmSync(metaPath);
     telemetry.sendEvent(EventAction.EXPORT_DATA, {
       timestampBegin: 0,
       timestampEnd: indexToTimestamp(
@@ -44529,7 +45059,7 @@ const getContentFromFile = async (buffer, filename) => {
   });
   try {
     await promisify(pipeline)(
-      fs.createReadStream(filename),
+      _m$a.createReadStream(filename),
       createInflateRaw(),
       content
     );
@@ -44592,17 +45122,17 @@ const loadBits = (buffer) => new Uint16Array(new Uint8Array(buffer.readChunk()).
 const loadPPK2File = async (filename, sessionRootPath, minSpaceTriggerLimit, onProgress) => {
   let progress = 0;
   let lastUpdate = 0;
-  const sessionPath = path.join(sessionRootPath, v4());
-  const sessionFilePath = path.join(sessionPath, "session.raw");
-  fs.mkdirSync(sessionPath);
+  const sessionPath = _m$c.join(sessionRootPath, v4());
+  const sessionFilePath = _m$c.join(sessionPath, "session.raw");
+  _m$a.mkdirSync(sessionPath);
   const cleanUp = () => {
-    fs.rmSync(sessionPath, { recursive: true, force: true });
+    _m$a.rmSync(sessionPath, { recursive: true, force: true });
   };
   window.addEventListener("beforeunload", cleanUp);
   AddSession(0, 0, SessionFlag.PPK2Loaded, sessionFilePath);
   try {
     let totalSize = 0;
-    const directory = await unzipper.Open.file(filename);
+    const directory = await _m$3.Open.file(filename);
     await Promise.all(
       directory.files.map(
         (f2) => new Promise((resolve2) => {
@@ -44644,8 +45174,8 @@ const loadPPK2File = async (filename, sessionRootPath, minSpaceTriggerLimit, onP
               }
             })
           ).pipe(
-            fs.createWriteStream(
-              path.join(sessionPath, f2.path)
+            _m$a.createWriteStream(
+              _m$c.join(sessionPath, f2.path)
             )
           ).on("error", reject).on("finish", resolve2);
         })
@@ -44653,7 +45183,7 @@ const loadPPK2File = async (filename, sessionRootPath, minSpaceTriggerLimit, onP
     );
     logger$1.info(`Decompression session information to ${sessionPath}`);
     const metadata = JSON.parse(
-      fs.readFileSync(path.join(sessionPath, "metadata.json")).toString()
+      _m$a.readFileSync(_m$c.join(sessionPath, "metadata.json")).toString()
     );
     UpdateSessionData({
       filePath: sessionFilePath,
@@ -44712,7 +45242,7 @@ const loadData$1 = async (filename, sessionRootFolder, minSpaceTriggerLimit, onP
       pos < 0 ? filename.length : pos
     )}.ppk2`;
     const session = DataManager().getSessionBuffers();
-    if (!fs.existsSync(newFilename) && session.fileBuffer.getSessionFolder()) {
+    if (!_m$a.existsSync(newFilename) && session.fileBuffer.getSessionFolder()) {
       await saveData(
         newFilename,
         {
@@ -44924,7 +45454,7 @@ const screenshot = () => async () => {
     return;
   }
   setLastSaveDir(dirname(filename));
-  fs.writeFileSync(filename, image.toPNG());
+  _m$a.writeFileSync(filename, image.toPNG());
 };
 const indexer = (indexBegin, indexEnd, length) => {
   let movingIndex = indexBegin;
@@ -44978,8 +45508,8 @@ const exportChart = (filename, timestampBegin, timestampEnd, contentSelection, s
   if (!filename) {
     return Promise.resolve();
   }
-  const fd2 = fs.openSync(filename, "w");
-  fs.writeSync(
+  const fd2 = _m$a.openSync(filename, "w");
+  _m$a.writeSync(
     fd2,
     selectivePrint(
       [
@@ -45011,7 +45541,7 @@ const exportChart = (filename, timestampBegin, timestampEnd, contentSelection, s
           data.getAllBitData(),
           contentSelection
         );
-        fs.write(fd2, content, () => {
+        _m$a.write(fd2, content, () => {
           setProgress2(
             Math.round(
               (start - timestampBegin) / (timestampEnd - timestampBegin) * 100
@@ -45025,7 +45555,7 @@ const exportChart = (filename, timestampBegin, timestampEnd, contentSelection, s
     dispatch(hideExportDialog());
     logger$1.info(`Exported CSV to: ${filename}`);
   }).finally(() => {
-    fs.closeSync(fd2);
+    _m$a.closeSync(fd2);
     setExporting(false);
   });
 };
@@ -45667,8 +46197,8 @@ const SessionSettings = () => {
                 className: "tw-w-full",
                 variant: "secondary",
                 onClick: () => {
-                  dispatch(setSessionRootFolder(os.tmpdir()));
-                  setPreferredSessionLocation(os.tmpdir());
+                  dispatch(setSessionRootFolder(_m$8.tmpdir()));
+                  setPreferredSessionLocation(_m$8.tmpdir());
                 },
                 children: "Reset"
               }
@@ -45807,7 +46337,7 @@ const StartStop = () => {
     resetCache();
     const mode = scopePane ? "Scope" : "DataLogger";
     if (mode === "DataLogger") {
-      if (!fs.existsSync(sessionFolder)) {
+      if (!_m$a.existsSync(sessionFolder)) {
         logger$1.error(
           `Temp Disk root folder '${sessionFolder}' does not exists. Change the root directory in the Temp Disk settings on the side panel.`
         );
@@ -46242,10 +46772,10 @@ function formatDuration(seconds) {
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 const logger = {
-  info: (msg, ...args) => electronLog.info(msg, ...args),
-  warn: (msg, ...args) => electronLog.warn(msg, ...args),
-  error: (msg, ...args) => electronLog.error(msg, ...args),
-  debug: (msg, ...args) => electronLog.debug(msg, ...args)
+  info: (msg, ...args) => _m$f.info(msg, ...args),
+  warn: (msg, ...args) => _m$f.warn(msg, ...args),
+  error: (msg, ...args) => _m$f.error(msg, ...args),
+  debug: (msg, ...args) => _m$f.debug(msg, ...args)
 };
 class RecoveryManager {
   static #instance;
@@ -46262,7 +46792,7 @@ class RecoveryManager {
     this.#initialSamplingTime = 10;
     this.#initialSamplesPerSecond = 1e6 / this.#initialSamplingTime;
     this.#samplesPerSecond = this.#initialSamplesPerSecond;
-    this.#currentProcessName = process.argv[0].split(path.sep)[process.argv[0].split(path.sep).length - 1];
+    this.#currentProcessName = process.argv[0].split(_m$c.sep)[process.argv[0].split(_m$c.sep).length - 1];
     this.#foldingBuffer = null;
     this.#fileBuffer = null;
     this.#cancelRecovery = false;
@@ -46277,12 +46807,12 @@ class RecoveryManager {
     this.#cancelRecovery = true;
   }
   static #getSamplingDurationInSec(session) {
-    const stats = fs.statSync(session.filePath);
+    const stats = _m$a.statSync(session.filePath);
     return Math.round(stats.size / (session.samplingRate * frameSize));
   }
   static renderSessionData = (session, onComplete, onFail) => async (dispatch, getState) => {
     try {
-      const sessionPath = path.dirname(session.filePath);
+      const sessionPath = _m$c.dirname(session.filePath);
       await DataManager().reset();
       dispatch(resetChartTime());
       dispatch(resetMinimap());
@@ -46329,7 +46859,7 @@ class RecoveryManager {
   };
   #finalizeRecovery = (session) => async (dispatch) => {
     try {
-      const sessionPath = path.dirname(session.filePath);
+      const sessionPath = _m$c.dirname(session.filePath);
       await this.#foldingBuffer?.saveToFile(sessionPath);
       await RecoveryManager.#saveMetadataToFile(
         sessionPath,
@@ -46350,9 +46880,9 @@ class RecoveryManager {
       },
       formatVersion: 2
     };
-    const metadataPath = path.join(sessionPath, "metadata.json");
+    const metadataPath = _m$c.join(sessionPath, "metadata.json");
     try {
-      await fs.promises.writeFile(
+      await _m$a.promises.writeFile(
         metadataPath,
         JSON.stringify(metadata, null, 2)
       );
@@ -46423,10 +46953,10 @@ class RecoveryManager {
   recoverSession = (session, onProgress, onComplete, onFail, onCancel) => async (dispatch) => {
     dispatch(setSessionRecoveryPending(true));
     this.#cancelRecovery = false;
-    const stat = promisify(fs.stat);
+    const stat = promisify(_m$a.stat);
     const sessionFilePath = session.filePath;
-    const sessionPath = path.dirname(sessionFilePath);
-    if (!fs.existsSync(sessionFilePath)) {
+    const sessionPath = _m$c.dirname(sessionFilePath);
+    if (!_m$a.existsSync(sessionFilePath)) {
       dispatch(setSessionRecoveryPending(false));
       onFail(new Error(`Session file not found: ${sessionFilePath}`));
       return;
@@ -46532,7 +47062,7 @@ class RecoveryManager {
         return;
       }
       const session = sessions[index];
-      if (!fs.existsSync(session.filePath)) {
+      if (!_m$a.existsSync(session.filePath)) {
         nonExistingFile = true;
         sessions.splice(index, 1);
         setTimeout(() => checkSession(index), 0);

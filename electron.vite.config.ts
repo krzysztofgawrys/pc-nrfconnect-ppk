@@ -75,23 +75,24 @@ function nodeBuiltinsExternalPlugin(): Plugin {
     const _require = createRequire(import.meta.url);
     const external = new Set([...builtinModules, 'electron', ...NODE_ONLY_PACKAGES]);
     const VIRT = '\0node-builtin:';
-    let isBuild = false;
 
     return {
         name: 'node-builtins-external',
         enforce: 'pre',
-        configResolved(config: { command: string }) {
-            isBuild = config.command === 'build';
-        },
         resolveId(id) {
+            // Always redirect to a virtual module that uses require() at runtime.
+            // Using Rollup's external:true would produce static ESM import statements
+            // (e.g. import { ipcRenderer } from "electron") which Chromium's module
+            // loader can't resolve. Instead, the virtual module emits require() calls
+            // which work in Electron renderer with nodeIntegration:true.
             const bare = id.startsWith('node:') ? id.slice(5) : id;
             if (external.has(id) || external.has(bare)) {
-                return isBuild ? { id, external: true } : VIRT + bare;
+                return VIRT + bare;
             }
             // Match sub-path imports, e.g. 'electron-log/renderer'
             for (const pkg of external) {
                 if (id.startsWith(pkg + '/')) {
-                    return isBuild ? { id, external: true } : VIRT + id;
+                    return VIRT + id;
                 }
             }
         },
